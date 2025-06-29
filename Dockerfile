@@ -1,20 +1,15 @@
-# Utilise node officiel stable
-FROM node:18-alpine
+FROM node:18
 
-# Définit le répertoire de travail
+RUN apt-get update && apt-get install -y git && apt-get clean
+
 WORKDIR /app
 
-# Copie package.json et package-lock.json (si présent)
 COPY package*.json ./
 
-# Installe les dépendances
 RUN npm install --production
 
-# Copie tout le code
 COPY . .
 
-# Expose le port défini
 EXPOSE 3000
 
-# Démarre le serveur
-CMD ["npm", "start"]
+CMD ["node", "backend/index.js"]
